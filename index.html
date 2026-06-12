@@ -148,14 +148,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
       <div class="field-label">Energietr&#228;ger</div>
       <div class="btn-group">
         <button class="btn-choice active" id="btn_gas" onclick="setEnergie('gas')">&#128293; Gas</button>
-        <button class="btn-choice" id="btn_oel" onclick="setEnergie('oel')">&#128722; &#214;l</button>
+        <button class="btn-choice" id="btn_oel" onclick="setEnergie('oel')">&#128707; &#214;l</button>
         <button class="btn-choice" id="btn_strom" onclick="setEnergie('strom')">&#9889; Strom</button>
       </div>
     </div>
     <div id="block_gas">
       <div class="field"><div class="field-label">Gasverbrauch <span class="field-unit">[kWh/Jahr]</span></div><input class="field-input" type="number" id="gas_kwh" placeholder="20000" oninput="syncGas('kwh')"></div>
       <div class="field"><div class="field-label">&#8230; oder in m&#179;</div><input class="field-input" type="number" id="gas_m3" placeholder="1900" oninput="syncGas('m3')"></div>
-      <div class="field"><div class="field-label">Gaspreis <span class="field-unit">[&#8364;/kWh]</span></div><input class="field-input" type="number" id="gas_preis" placeholder="0.11" step="0.001"></div>
+      <div class="field"><div class="field-label">Gaspreis <span class="field-unit">[&#8364;/kWh]</span></div><input class="field-input" type="number" id="gas_preis" placeholder="0.112" step="0.001" value="0.112"></div>
     </div>
     <div id="block_oel" class="hidden">
       <div class="field"><div class="field-label">&#214;lverbrauch <span class="field-unit">[Liter/Jahr]</span></div><input class="field-input" type="number" id="oel_liter" placeholder="3000" oninput="calcOel()"></div>
@@ -191,7 +191,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
     </div>
     <div class="field">
       <div class="field-label">Grundpreis / Z&#228;hlergeb&#252;hr <span class="field-unit">[&#8364;/Jahr]</span></div>
-      <input class="field-input" type="number" id="grundpreis" placeholder="200" step="10">
+      <input class="field-input" type="number" id="grundpreis" placeholder="196.24" step="0.01" value="196.24">
     </div>
     <p class="note">&#128161; Grundpreis f&#228;llt beim Abmelden des Gas-/&#214;lanschlusses komplett weg &#8211; z&#228;hlt zur j&#228;hrlichen Ersparnis dazu.</p>
   </div>
@@ -250,6 +250,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
         <option value="150">150 L</option>
         <option value="200" selected>200 L</option>
         <option value="250">250 L</option>
+        <option value="270">270 L</option>
         <option value="300">300 L</option>
         <option value="400">400 L</option>
         <option value="500">500 L</option>
@@ -271,7 +272,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
     <div class="card-title">Investition &amp; F&#246;rderung</div>
     <div class="field"><div class="field-label">Gesamtinvestition <span class="field-unit">[&#8364;]</span></div><input class="field-input" type="number" id="wp_invest" placeholder="18000" step="500" oninput="updateNetto()"></div>
     <div class="field"><div class="field-label">BEG-F&#246;rderung <span class="field-unit">[&#8364;]</span></div><input class="field-input" type="number" id="wp_foerderung" placeholder="5400" step="100" oninput="updateNetto()"></div>
-    <div class="field"><div class="field-label">Laufende Kosten/Jahr <span class="field-unit">[&#8364;]</span> <span class="badge">(opt.)</span></div><input class="field-input" type="number" id="wp_laufend" placeholder="120" step="10"></div>
+    <div class="field"><div class="field-label">Wartung / Service <span class="field-unit">[&#8364;/Jahr]</span> <span class="badge">(opt.)</span></div><input class="field-input" type="number" id="wp_laufend" placeholder="120" step="10"></div>
     <div class="field"><div class="field-label" style="font-weight:700;">Nettoinvestition</div><div class="result-value val-blue" id="netto_invest">&#8212;</div></div>
   </div>
   <div class="card">
@@ -281,7 +282,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
     </div>
     <div id="pv_section" class="hidden">
       <div class="field"><div class="field-label">PV-Jahresertrag <span class="field-unit">[kWh]</span></div><input class="field-input" type="number" id="pv_ertrag" placeholder="8500" step="100"></div>
-      <div class="field"><div class="field-label">Einspeiseverg&#252;tung <span class="field-unit">[&#8364;/kWh]</span></div><input class="field-input" type="number" id="pv_einspeise" placeholder="0.082" step="0.001"></div>
+      <div class="field"><div class="field-label">Einspeiseverg&#252;tung <span class="field-unit">[&#8364;/kWh]</span></div><input class="field-input" type="number" id="pv_einspeise" placeholder="0.071" step="0.001" value="0.071"></div>
       <p class="note">&#128161; PV-Jahresertrag aus PV Calculator &#252;bernehmen.</p>
     </div>
   </div>
@@ -289,19 +290,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
 
 <!-- TAB 2: AUSWERTUNG -->
 <div class="tab-panel" id="panel-2">
-  <div id="auswertung_placeholder" class="info-banner">&#8505;&#65039; Heizlast, Verbrauchsdaten und Strompreis eingeben, dann auf &#9654; tippen.</div>
+  <div id="auswertung_placeholder" class="info-banner">&#8505;&#65039; Heizlast, Verbrauchsdaten und Strompreis eingeben, dann auf <strong>Berechnen</strong> tippen.</div>
+  <button onclick="berechnen()" style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px;">&#9654;&nbsp; Berechnen</button>
   <div id="auswertung_content" class="hidden">
     <div id="vorlauf_warn_auswertung" class="hidden warn-banner"></div>
-    <div class="section-header">&#127777;&#65039; Energiebilanz</div>
+
+    <div class="section-header">&#127777;&#65039; W&#228;rmebilanz</div>
+    <div class="card">
+      <div class="result-box" style="background:var(--bg3);"><div class="result-label" style="font-weight:600;color:var(--text);">W&#228;rmebedarf gesamt <span style="font-size:10px;color:var(--text2);">(thermische Energie)</span></div><div class="result-value" style="background:#1a1a2e;color:#e8eaf0;font-size:15px;font-weight:700;padding:3px 9px;border-radius:5px;min-width:68px;text-align:center;" id="r_waerme">&#8212;</div></div>
+      <div class="result-box"><div class="result-label">davon Heizung</div><div class="result-value val-orange" id="r_heizung_kwh">&#8212;</div></div>
+      <div class="result-box"><div class="result-label">davon Warmwasser</div><div class="result-value" style="background:#0a1a2a;color:#7ec8e3;font-size:15px;font-weight:700;padding:3px 9px;border-radius:5px;min-width:68px;text-align:center;" id="r_tww_kwh">&#8212;</div></div>
+    </div>
+
+    <div class="section-header">&#9889; Energiebilanz</div>
     <div class="monthly-row">
       <div class="monthly-box"><div class="monthly-val" id="r_wp_strom" style="color:var(--orange);">&#8212;</div><div class="monthly-lbl">kWh/Jahr WP-Strom</div></div>
       <div class="monthly-box"><div class="monthly-val" id="r_cop_jahres" style="color:var(--green);">&#8212;</div><div class="monthly-lbl">Jahres-COP</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">W&#228;rmebilanz</div>
-      <div class="result-box"><div class="result-label">W&#228;rmebedarf gesamt</div><div class="result-value val-blue" id="r_waerme">&#8212;</div></div>
-      <div class="result-box"><div class="result-label">davon Heizung</div><div class="result-value val-blue" id="r_heizung_kwh">&#8212;</div></div>
-      <div class="result-box"><div class="result-label">davon Warmwasser</div><div class="result-value val-blue" id="r_tww_kwh">&#8212;</div></div>
     </div>
     <div class="card">
       <div class="card-title">&#9889; WP-Stromverbrauch [kWh/Monat]</div>
@@ -351,9 +355,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
     <div class="card">
       <div class="card-title">20-Jahres-Projektion</div>
       <div id="preis_annahmen" class="note" style="margin-bottom:10px;"></div>
-      <div class="result-box"><div class="result-label">Nettoinvestition</div><div class="result-value val-blue" id="r_netto2">&#8212;</div></div>
-      <div class="result-box"><div class="result-label">&#216; Ersparnis/Monat (20J)</div><div class="result-value val-green" id="r_avg_monat">&#8212;</div></div>
-      <div class="result-box"><div class="result-label">Gesamtersparnis (20J)</div><div class="result-value val-green" id="r_gesamt">&#8212;</div></div>
+      <div class="result-box"><div class="result-label">Nettoinvestition (nach F&#246;rderung)</div><div class="result-value val-blue" id="r_netto2">&#8212;</div></div>
+      <div class="result-box"><div class="result-label">&#216; Ersparnis / Monat (20J)</div><div class="result-value val-green" id="r_avg_monat">&#8212;</div></div>
+      <div class="result-box"><div class="result-label">&#216; Ersparnis / Jahr (20J)</div><div class="result-value val-green" id="r_avg_jahr">&#8212;</div></div>
+      <div class="result-box"><div class="result-label">Gesamtersparnis brutto (20J)</div><div class="result-value val-green" id="r_gesamt">&#8212;</div></div>
+      <div class="result-box" style="background:#0a2a1e;border:1px solid var(--green);">
+        <div class="result-label" style="font-weight:700;color:var(--green);">&#127381; Nettogewinn nach 20J <span style="font-size:10px;font-weight:400;">(abzgl. Investition)</span></div>
+        <div class="result-value val-green" id="r_nettogewinn">&#8212;</div>
+      </div>
     </div>
   </div>
 </div>
@@ -366,7 +375,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
 </div>
 
 </div><!-- /content -->
-<button class="fab" onclick="berechnen()">&#9654;</button>
+
 
 <!-- MODAL -->
 <div class="modal-overlay" id="geraet_modal">
@@ -545,9 +554,13 @@ function berechnen(){
   document.getElementById('r_kosten_neu').textContent=fmtEur(kostenNeu);
   document.getElementById('r_ersparnis').textContent=fmtEur(ersparnis1);
   document.getElementById('r_ersparnis').className='result-value '+(ersparnis1>=0?'val-green':'val-red');
+  var nettogewinn20 = total20 - netto;
   document.getElementById('r_netto2').textContent=netto>0?fmtEur(netto):'--';
   document.getElementById('r_avg_monat').textContent=fmtEur(total20/20/12);
+  document.getElementById('r_avg_jahr').textContent=fmtEur(total20/20);
   document.getElementById('r_gesamt').textContent=fmtEur(total20);
+  document.getElementById('r_nettogewinn').textContent=fmtEur(nettogewinn20);
+  document.getElementById('r_nettogewinn').className='result-value '+(nettogewinn20>=0?'val-green':'val-red');
   var energieLabel=state.energie==='gas'?'Gas':state.energie==='oel'?'Öl':'Strom';
   document.getElementById('preis_annahmen').textContent='Annahmen: '+energieLabel+'-Preis +'+altDelta+'%/Jahr · Strom +'+(stromDelta||0)+'%/Jahr (CO\u2082-Steuer ETS 2 ab 2028 eingerechnet)';
   document.getElementById('netto_invest').textContent=netto>0?fmtEur(netto):'--';
@@ -602,7 +615,7 @@ function renderAmort(netto,ers1,stromDelta,altDelta,laufend,wpStrom,strompreis,k
     kum+=altY-(wpStrom*spY+(laufend||0));
     return+(kum/1000).toFixed(2);
   });
-  charts.am=new Chart(ctx,{type:'line',data:{labels:jahre.map(function(y){return 'J'+y;}),datasets:[{label:'Investitionskapital',data:inv,borderColor:'#ff5c5c',backgroundColor:'transparent',borderWidth:2,pointRadius:0,borderDash:[5,3]},{label:'Zahlungsr\u00fcckfl\u00fcsse',data:rueck,borderColor:'#3ecf8e',backgroundColor:'rgba(62,207,142,0.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8b91a8',font:{size:11},boxWidth:10}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y.toFixed(1)+' k\u20ac';}}}},scales:{x:{grid:{color:'#2a3050'},ticks:{color:'#8b91a8',font:{size:10},maxTicksLimit:11}},y:{grid:{color:'#2a3050'},ticks:{color:'#8b91a8',font:{size:11},callback:function(v){return v+' k\u20ac';}}}}}}); 
+  charts.am=new Chart(ctx,{type:'line',data:{labels:jahre.map(function(y){return 'J'+y;}),datasets:[{label:'Investition',data:inv,borderColor:'#ff5c5c',backgroundColor:'transparent',borderWidth:2,pointRadius:0,borderDash:[5,3]},{label:'Zahlungsr\u00fcckfl\u00fcsse',data:rueck,borderColor:'#3ecf8e',backgroundColor:'rgba(62,207,142,0.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8b91a8',font:{size:11},boxWidth:10}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y.toFixed(1)+' k\u20ac';}}}},scales:{x:{grid:{color:'#2a3050'},ticks:{color:'#8b91a8',font:{size:10},maxTicksLimit:11}},y:{grid:{color:'#2a3050'},ticks:{color:'#8b91a8',font:{size:11},callback:function(v){return v+' k\u20ac';}}}}}}); 
 }
 function loadGeraete(){
   // Hardcoded Gerätedatenbank – sortiert nach Tecalor, Viessmann, Daikin
