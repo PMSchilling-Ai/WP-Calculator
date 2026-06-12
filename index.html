@@ -237,7 +237,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
     <div class="field" style="flex-direction:column;align-items:stretch;gap:10px;">
       <div class="field-label">System</div>
       <div class="btn-group">
-        <button class="btn-choice active" id="btn_kombi" onclick="setInnensystem('kombi')">&#128230; Kombiget</button>
+        <button class="btn-choice active" id="btn_kombi" onclick="setInnensystem('kombi')">&#128230; Kombi</button>
         <button class="btn-choice" id="btn_getrennt" onclick="setInnensystem('getrennt')">&#128295; Getrennt</button>
       </div>
     </div>
@@ -396,6 +396,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
 
 <script>
 var state = { energie:'gas', innensystem:'kombi', selectedGeraetId:null };
+var HERSTELLER_ORDER = ['Tecalor','Viessmann','Daikin'];
+var HERSTELLER_COLOR = {'Tecalor':'#4a9eff','Viessmann':'#3ecf8e','Daikin':'#ffb347'};
 var geraete = [];
 var charts = {};
 var HEIZ_PROFIL = [0.175,0.155,0.120,0.075,0.030,0.005,0.002,0.003,0.020,0.060,0.130,0.165];
@@ -654,8 +656,6 @@ function saveGeraeteLS(){
   try{localStorage.setItem('wp_geraete_custom',JSON.stringify(custom));}catch(e){}
 }
 
-var HERSTELLER_ORDER = ['Tecalor','Viessmann','Daikin'];
-var HERSTELLER_COLOR = {'Tecalor':'#4a9eff','Viessmann':'#3ecf8e','Daikin':'#ffb347'};
 
 function renderGeraeteListe(){
   var el=document.getElementById('geraete_liste');
